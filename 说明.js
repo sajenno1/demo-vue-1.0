@@ -1,6 +1,6 @@
-// 1. 过滤器使用..(src/utils/filter.js___src/main.js___src/views/About.vue)
+// 1. 过滤器使用...("@/utils/filter.js","@/main.js","@/views/About.vue")
 
-// 2. vue异步组件
+// 2. vue异步组件...("@/router.js")
 {
     // a. vue-router配置路由 , 使用vue的异步组件实现按需加载
 
@@ -50,44 +50,110 @@
         */    
 }
     
-// 3.Mixin 混入...
+// 3. Mixin 混入...("@/mixins/mixin.js","@/views/NewView.vue")
 {
     //作用：复用  
     //遵循就近原则，有冲突使用组件内的数据(方法)
 
     // mixin.js
-    /*
-        const mixin = {
-            data() {
-            return {
-                hello: 'hello Mixin'
+        /*
+            const mixin = {
+                data() {
+                return {
+                    hello: 'hello Mixin'
+                }
+                },
+                created() {
+                console.log('在mixin中vue的data、生命周期、方法等都可以使用');
+                },
+                methods: {
+                hello() {
+                    console.log(this.hello);
+                }
+                }
             }
-            },
-            created() {
-            console.log('在mixin中vue的data、生命周期、方法等都可以使用');
-            },
-            methods: {
-            hello() {
-                console.log(this.hello);
-            }
-            }
-        }
-        export default mixin;
-    */
+            export default mixin;
+        */
 
     // 1. 局部使用 在xxx.vue中
-    /*
-        
-        <script>
-        import mixin from '@/mixin/mixin';
-        export default {
-        mixins: [mixin]
-        }
-        </script>
-    */
+        /*
+            <script>
+            import mixin from '@/mixin/mixin';
+            export default {
+            mixins: [mixin]
+            }
+            </script>
+        */
     // 2.全局使用 main.js
+        /*
+            import mixin from '@/mixin/mixin';
+            Vue.Mixin(mixin)
+        */
+}
+
+// 4. this.$nextTick(callback) 
+//      解决为了在数据变化之后等待 Vue 完成更新 DOM。可以在数据变化之后立即使用 Vue.nextTick(callback)。
+//      这样回调函数将在 DOM 更新完成后被调用。
+{
     /*
-        import mixin from '@/mixin/mixin';
-        Vue.Mixin(mixin)
+        Vue.component('example', {
+        template: '<span>{{ message }}</span>',
+        data: function () {
+            return {
+            message: '未更新'
+            }
+        },
+        methods: {
+            updateMessage: function () {
+            this.message = '已更新'
+            console.log(this.$el.textContent) // => '未更新'
+            this.$nextTick(function () {
+                console.log(this.$el.textContent) // => '已更新'
+            })
+            }
+        }
+        })
     */
+}
+
+// 5. Components props类型检测...("@/components/BlogPost.vue","@/views/NewView.vue")
+{
+    // 组件通信..父监听子触发的事件.   
+    // 父： v-on:事件名="...[$evnet]"  子：v-on:click="$emit('事件名' [, 参数])"
+    // 1).
+    //  父组件 监听子组件触发的事件 event-name ("enlarge-text")
+    {
+        /*
+            <blog-post
+            ...
+            v-on:enlarge-text="postFontSize += 0.1"
+            ></blog-post>
+        */
+        // 子组件通过调用内建的 $emit 方法 并传入事件名称来触发一个事件 event-name ("enlarge-text")
+        /*
+            <button v-on:click="$emit('enlarge-text')">
+                Enlarge text
+            </button>
+        */
+        // 
+        // 有了这个 v-on:enlarge-text="postFontSize += 0.1" 监听器，父级组件就会接收该事件并更新 postFontSize 的值。
+    }
+    // 2).
+    // 使用事件抛出一个值
+    {
+        // 可以使用 $emit 的第二个参数来提供这个值
+        /*
+            <button v-on:click="$emit('enlarge-text', 0.1)">
+                Enlarge text
+            </button>
+        */
+       // 父级组件监听这个事件的时候，我们可以通过 $event 访问到被抛出的这个值
+       /*
+            <blog-post
+            ...
+            v-on:enlarge-text="postFontSize += $event"
+            ></blog-post>
+       */
+       // 或者，如果这个事件处理函数是一个方法，那么这个值将会作为第一个参数传入这个方法
+    }
 }
