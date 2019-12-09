@@ -157,3 +157,27 @@
        // 或者，如果这个事件处理函数是一个方法，那么这个值将会作为第一个参数传入这个方法
     }
 }
+
+// 6. .env 根据环境读取变量配置
+{
+    // npm run serve 默认会使用.env.dev文件 (.env.development)
+    // npm run build:dev 默认会使用.env.dev文件 (.env.development)
+    // npm run build:test 默认会使用.env.test文件 (.env.test)
+    // npm run build:prod 默认会使用.env.prod文件 (.env.production)
+    // 变量命名格式: VUE_APP_NAME  VUE_APP_是规定的命名格式,NAME是自定义的名, 例:VUE_APP_URL=http://api.com
+    // 通过:process.env.variableName获取环境变量
+    /*
+        data():{
+            return{
+                url:process.env.VUE_APP_URL
+            }
+        }
+    */
+    
+
+}
+
+// 7. vuex 状态管理 ---- 数据驱动, 数据发生改变 通知并且更新view
+{
+    // 使用前提- 大型项目, 否则显得繁琐冗余
+}
