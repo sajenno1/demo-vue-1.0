@@ -177,7 +177,68 @@
 
 }
 
-// 7. vuex 状态管理 ---- 数据驱动, 数据发生改变 通知并且更新view
+// 7. vuex 状态管理 ---- 数据驱动, 数据发生改变 通知并且更新view ("@/store/*","@/main.js")
 {
     // 使用前提- 大型项目, 否则显得繁琐冗余
+    // 在一个模块化的打包系统中，您必须显式地通过 Vue.use() 来安装 Vuex:
+    // △注: vuex 依赖于 promise 不支持IE..
+    /*  
+        @/store/index.js:
+        import Vue from 'vue'
+        import Vuex from 'vuex'
+        Vue.use(Vuex)
+        ...
+        @/main.js:
+        import store from '@/store'
+        ...
+
+        new Vue({
+            ...
+            store,
+            ...
+        })
+    */
+    /*
+        @/store/index.js:
+        // 状态
+        const state = {
+            count: 0
+        }
+        // 行为
+        const actions = {
+            increment ({ commit }) {
+                commit( 'increment' )
+            }
+        }
+        // 改变
+        const mutations = {
+            'increment' (state) {
+                state.count++
+            }
+        }
+        // 导出
+        export default new Vuex.Store({
+            state,
+            actions,
+            mutations
+        })
+    */ 
+    // 提交载荷（Payload）
+    // 你可以向 store.commit 传入额外的参数，即 mutation 的 载荷（payload）：
+    /*
+        // 行为
+        const actions = {
+            increment ({ commit }, playload) {
+                commit( 'increment', playload )
+            }
+        }
+        // 改变
+        const mutations = {
+            'increment' (state, playload) {
+                state.count += playload
+            }
+        }
+    */
+    // ...
+
 }
