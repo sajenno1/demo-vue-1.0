@@ -10,7 +10,7 @@
                 :content=content 
                 :isShow=isShow
                 :fontsize=fontsize
-                v-on:enlarge-text = 'postFontSize += 0.1'>
+                v-on:enlarge-text = 'postFontSize += $event.wi'>
             </blog-post>
         </div>
         <v-btn @click="fontsize += 1">content enlarge-text</v-btn>
